@@ -18,6 +18,7 @@ package cmd
 import (
 	"fmt"
 	"github.com/spf13/cobra"
+	"../utils"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -28,6 +29,9 @@ var getPageCmd = &cobra.Command{
 	Use:   "page",
 	Short: "Get a list of pages.",
 	Run: func(cmd *cobra.Command, args []string) {
+		apiKeyFromEnv := utils.GetEnv("API_KEY")
+		apiKey = utils.DefaultToEnv(apiKeyFromEnv, apiKey)
+
 		client := &http.Client{Timeout: time.Second * 10}
 		request, err := http.NewRequest("GET", "https://api.statuspage.io/v1/pages", nil)
 		request.Header.Set("Authorization", "OAuth "+apiKey)
@@ -58,7 +62,6 @@ var getPageCmd = &cobra.Command{
 }
 
 func init() {
-	getPageCmd.Flags().StringVarP(&apiKey, "api-key", "k", "", "API key to authenticate against the status page API (required)")
-	getPageCmd.MarkFlagRequired("api-key")
+	getPageCmd.Flags().StringVarP(&apiKey, "api-key", "k", "", "API_KEY environment variable. API key to authenticate against the status page API (required)")
 	getCmd.AddCommand(getPageCmd)
 }

@@ -19,7 +19,6 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/spf13/cobra"
-	// "github.com/appvia/statuspage/utils"
 	"../utils"
 	"io/ioutil"
 	"net/http"
@@ -142,11 +141,11 @@ var deleteComponentCmd = &cobra.Command{
 }
 
 func init() {
-	getComponentCmd.Flags().StringVarP(&apiKey, "api-key", "k", "API_KEY environment variable", "API key to authenticate against the status page API (required)")
+	getComponentCmd.Flags().StringVarP(&apiKey, "api-key", "k", "", "API_KEY environment variable. API key to authenticate against the status page API (required)")
 	getComponentCmd.Flags().StringVarP(&pageID, "page-id", "p", "", "Page identifier (required)")
 	getComponentCmd.Flags().StringVarP(&componentID, "id", "i", "", "Component identifier")
 	getComponentCmd.MarkFlagRequired("page-id")
-	createComponentCmd.Flags().StringVarP(&apiKey, "api-key", "k", "API_KEY environment variable", "API key to authenticate against the status page API (required)")
+	createComponentCmd.Flags().StringVarP(&apiKey, "api-key", "k", "", "API_KEY environment variable. API key to authenticate against the status page API (required)")
 	createComponentCmd.Flags().StringVarP(&pageID, "page-id", "p", "", "Page identifier (required)")
 	createComponentCmd.Flags().StringVarP(&componentName, "name", "n", "", "Display name for component")
 	createComponentCmd.Flags().StringVarP(&componentDescription, "description", "d", "", "More detailed description for component")
@@ -155,7 +154,7 @@ func init() {
 	createComponentCmd.MarkFlagRequired("name")
 	createComponentCmd.MarkFlagRequired("description")
 	createComponentCmd.MarkFlagRequired("status")
-	deleteComponentCmd.Flags().StringVarP(&apiKey, "api-key", "k", "API_KEY environment variable", "API key to authenticate against the status page API (required)")
+	deleteComponentCmd.Flags().StringVarP(&apiKey, "api-key", "k", "", "API_KEY environment variable. API key to authenticate against the status page API (required)")
 	deleteComponentCmd.Flags().StringVarP(&componentID, "id", "i", "", "Component identifier (required)")
 	deleteComponentCmd.Flags().StringVarP(&pageID, "page-id", "p", "", "Page identifier (required)")
 	deleteComponentCmd.MarkFlagRequired("id")

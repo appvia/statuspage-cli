@@ -20,7 +20,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/spf13/cobra"
-	// "github.com/appvia/statuspage/utils"
 	"../utils"
 	"io/ioutil"
 	"net/http"
@@ -199,11 +198,11 @@ var deleteIncidentCmd = &cobra.Command{
 }
 
 func init() {
-	getIncidentCmd.Flags().StringVarP(&apiKey, "api-key", "k", "API_KEY environment variable", "API key to authenticate against the status page API (required)")
+	getIncidentCmd.Flags().StringVarP(&apiKey, "api-key", "k", "", "API_KEY environment variable. API key to authenticate against the status page API (required)")
 	getIncidentCmd.Flags().StringVarP(&pageID, "page-id", "p", "", "Page identifier (required)")
 	getIncidentCmd.Flags().StringVarP(&incidentID, "id", "i", "", "Incident Identifier")
 	getIncidentCmd.MarkFlagRequired("page-id")
-	createIncidentCmd.Flags().StringVarP(&apiKey, "api-key", "k", "API_KEY environment variable", "API key to authenticate against the status page API (required)")
+	createIncidentCmd.Flags().StringVarP(&apiKey, "api-key", "k", "", "API_KEY environment variable. API key to authenticate against the status page API (required)")
 	createIncidentCmd.Flags().StringVarP(&pageID, "page-id", "p", "", "Page identifier (required)")
 	createIncidentCmd.Flags().StringVarP(&incidentName, "name", "n", "", "Incident name (required)")
 	createIncidentCmd.Flags().StringVarP(&incidentStatus, "status", "s", "", "The Incident status. Valid choices are: investigating, identified, monitoring, resolved, scheduled, in_progress, verifying, completed.")
@@ -211,7 +210,7 @@ func init() {
 	createIncidentCmd.Flags().StringToStringVarP(&incidentComponents, "components", "c", map[string]string{}, "Map of status changes to apply to affected components")
 	createIncidentCmd.MarkFlagRequired("page-id")
 	createIncidentCmd.MarkFlagRequired("name")
-	updateIncidentCmd.Flags().StringVarP(&apiKey, "api-key", "k", "API_KEY environment variable", "API key to authenticate against the status page API (required)")
+	updateIncidentCmd.Flags().StringVarP(&apiKey, "api-key", "k", "", "API_KEY environment variable. API key to authenticate against the status page API (required)")
 	updateIncidentCmd.Flags().StringVarP(&pageID, "page-id", "p", "", "Page identifier (required)")
 	updateIncidentCmd.Flags().StringVarP(&incidentID, "id", "i", "", "Incident identifier (required)")
 	updateIncidentCmd.Flags().StringVarP(&incidentStatus, "status", "s", "", "The incident status. Valid choices are: investigating, identified, monitoring, resolved, scheduled, in_progress, verifying, completed.")
@@ -219,7 +218,7 @@ func init() {
 	updateIncidentCmd.Flags().StringToStringVarP(&incidentComponents, "components", "c", map[string]string{}, "Map of status changes to apply to affected components")
 	updateIncidentCmd.MarkFlagRequired("page-id")
 	updateIncidentCmd.MarkFlagRequired("id")
-	deleteIncidentCmd.Flags().StringVarP(&apiKey, "api-key", "k", "API_KEY environment variable", "API key to authenticate against the status page API (required)")
+	deleteIncidentCmd.Flags().StringVarP(&apiKey, "api-key", "k", "", "API_KEY environment variable. API key to authenticate against the status page API (required)")
 	deleteIncidentCmd.Flags().StringVarP(&incidentID, "id", "i", "", "Incident Identifier (required)")
 	deleteIncidentCmd.Flags().StringVarP(&pageID, "page-id", "p", "", "Page identifier (required)")
 	deleteIncidentCmd.MarkFlagRequired("id")
