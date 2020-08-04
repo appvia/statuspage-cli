@@ -1,6 +1,6 @@
 # Statuspage CLI
 
-Statuspage CLI allows you to interact create, read, update and delete Statuspage resources.
+Statuspage CLI allows you to create, read, update and delete Statuspage resources.
 
 ## Prerequisite
 It is assumed that you have created an Atlassian Statuspage account, a page and an API key.
