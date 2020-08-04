@@ -38,6 +38,9 @@ var getIncidentCmd = &cobra.Command{
 	Use:   "incident",
 	Short: "Get a list of incidents or a component with a specified incident identifier.",
 	Run: func(cmd *cobra.Command, args []string) {
+		apiKeyFromEnv := utils.GetEnv("API_KEY")
+		apiKey = utils.DefaultToEnv(apiKeyFromEnv, apiKey)
+
 		if incidentID == "" {
 			url = "https://api.statuspage.io/v1/pages/" + pageID + "/incidents"
 		} else {
@@ -72,6 +75,9 @@ var createIncidentCmd = &cobra.Command{
 	Use:   "incident",
 	Short: "Create an incident.",
 	Run: func(cmd *cobra.Command, args []string) {
+		apiKeyFromEnv := utils.GetEnv("API_KEY")
+		apiKey = utils.DefaultToEnv(apiKeyFromEnv, apiKey)
+
 		incidentComponentIDs := []string{}
 		for c, _ := range incidentComponents {
 			incidentComponentIDs = append(incidentComponentIDs, c)
@@ -117,6 +123,9 @@ var updateIncidentCmd = &cobra.Command{
 	Use:   "incident",
 	Short: "Update an incident.",
 	Run: func(cmd *cobra.Command, args []string) {
+		apiKeyFromEnv := utils.GetEnv("API_KEY")
+		apiKey = utils.DefaultToEnv(apiKeyFromEnv, apiKey)
+
 		incidentComponentIDs := []string{}
 		for c, _ := range incidentComponents {
 			incidentComponentIDs = append(incidentComponentIDs, c)
@@ -162,6 +171,9 @@ var deleteIncidentCmd = &cobra.Command{
 	Use:   "incident",
 	Short: "Delete an incident with a specified incident identifier.",
 	Run: func(cmd *cobra.Command, args []string) {
+		apiKeyFromEnv := utils.GetEnv("API_KEY")
+		apiKey = utils.DefaultToEnv(apiKeyFromEnv, apiKey)
+
 		request, err := http.NewRequest("DELETE", "https://api.statuspage.io/v1/pages/"+pageID+"/incidents/"+incidentID, nil)
 		request.Header.Set("Authorization", "OAuth "+apiKey)
 
@@ -187,33 +199,29 @@ var deleteIncidentCmd = &cobra.Command{
 }
 
 func init() {
-	getIncidentCmd.Flags().StringVarP(&apiKey, "api-key", "k", "", "API key to authenticate against the status page API (required)")
+	getIncidentCmd.Flags().StringVarP(&apiKey, "api-key", "k", "API_KEY environment variable", "API key to authenticate against the status page API (required)")
 	getIncidentCmd.Flags().StringVarP(&pageID, "page-id", "p", "", "Page identifier (required)")
 	getIncidentCmd.Flags().StringVarP(&incidentID, "id", "i", "", "Incident Identifier")
-	getIncidentCmd.MarkFlagRequired("api-key")
 	getIncidentCmd.MarkFlagRequired("page-id")
-	createIncidentCmd.Flags().StringVarP(&apiKey, "api-key", "k", "", "API key to authenticate against the status page API (required)")
+	createIncidentCmd.Flags().StringVarP(&apiKey, "api-key", "k", "API_KEY environment variable", "API key to authenticate against the status page API (required)")
 	createIncidentCmd.Flags().StringVarP(&pageID, "page-id", "p", "", "Page identifier (required)")
 	createIncidentCmd.Flags().StringVarP(&incidentName, "name", "n", "", "Incident name (required)")
 	createIncidentCmd.Flags().StringVarP(&incidentStatus, "status", "s", "", "The Incident status. Valid choices are: investigating, identified, monitoring, resolved, scheduled, in_progress, verifying, completed.")
 	createIncidentCmd.Flags().StringVarP(&incidentBody, "body", "b", "", "The initial message, created as the first incident update")
 	createIncidentCmd.Flags().StringToStringVarP(&incidentComponents, "components", "c", map[string]string{}, "Map of status changes to apply to affected components")
-	createIncidentCmd.MarkFlagRequired("api-key")
 	createIncidentCmd.MarkFlagRequired("page-id")
 	createIncidentCmd.MarkFlagRequired("name")
-	updateIncidentCmd.Flags().StringVarP(&apiKey, "api-key", "k", "", "API key to authenticate against the status page API (required)")
+	updateIncidentCmd.Flags().StringVarP(&apiKey, "api-key", "k", "API_KEY environment variable", "API key to authenticate against the status page API (required)")
 	updateIncidentCmd.Flags().StringVarP(&pageID, "page-id", "p", "", "Page identifier (required)")
 	updateIncidentCmd.Flags().StringVarP(&incidentID, "id", "i", "", "Incident identifier (required)")
 	updateIncidentCmd.Flags().StringVarP(&incidentStatus, "status", "s", "", "The incident status. Valid choices are: investigating, identified, monitoring, resolved, scheduled, in_progress, verifying, completed.")
 	updateIncidentCmd.Flags().StringVarP(&incidentBody, "body", "b", "", "The initial message, created as the first incident update")
 	updateIncidentCmd.Flags().StringToStringVarP(&incidentComponents, "components", "c", map[string]string{}, "Map of status changes to apply to affected components")
-	updateIncidentCmd.MarkFlagRequired("api-key")
 	updateIncidentCmd.MarkFlagRequired("page-id")
 	updateIncidentCmd.MarkFlagRequired("id")
-	deleteIncidentCmd.Flags().StringVarP(&apiKey, "api-key", "k", "", "API key to authenticate against the status page API (required)")
+	deleteIncidentCmd.Flags().StringVarP(&apiKey, "api-key", "k", "API_KEY environment variable", "API key to authenticate against the status page API (required)")
 	deleteIncidentCmd.Flags().StringVarP(&incidentID, "id", "i", "", "Incident Identifier (required)")
 	deleteIncidentCmd.Flags().StringVarP(&pageID, "page-id", "p", "", "Page identifier (required)")
-	deleteIncidentCmd.MarkFlagRequired("api-key")
 	deleteIncidentCmd.MarkFlagRequired("id")
 	deleteIncidentCmd.MarkFlagRequired("page-id")
 	getCmd.AddCommand(getIncidentCmd)

@@ -37,6 +37,9 @@ var getComponentCmd = &cobra.Command{
 	Use:   "component",
 	Short: "Get a list of components or a component with a specified component identifier.",
 	Run: func(cmd *cobra.Command, args []string) {
+		apiKeyFromEnv := utils.GetEnv("API_KEY")
+		apiKey = utils.DefaultToEnv(apiKeyFromEnv, apiKey)
+
 		if componentID == "" {
 			url = "https://api.statuspage.io/v1/pages/" + pageID + "/components"
 		} else {
@@ -71,6 +74,9 @@ var createComponentCmd = &cobra.Command{
 	Use:   "component",
 	Short: "Create a component.",
 	Run: func(cmd *cobra.Command, args []string) {
+		apiKeyFromEnv := utils.GetEnv("API_KEY")
+		apiKey = utils.DefaultToEnv(apiKeyFromEnv, apiKey)
+
 		allowedComponentStatuses := []string{"operational", "under_maintenance", "degraded_performance", "partial_outage", "major_outage"}
 
 		if (utils.Contains(allowedComponentStatuses, componentStatus)) != true {
@@ -108,6 +114,9 @@ var deleteComponentCmd = &cobra.Command{
 	Use:   "component",
 	Short: "Delete a component with a specified component identifier.",
 	Run: func(cmd *cobra.Command, args []string) {
+		apiKeyFromEnv := utils.GetEnv("API_KEY")
+		apiKey = utils.DefaultToEnv(apiKeyFromEnv, apiKey)
+
 		request, err := http.NewRequest("DELETE", "https://api.statuspage.io/v1/pages/"+pageID+"/components/"+componentID, nil)
 		request.Header.Set("Authorization", "OAuth "+apiKey)
 
@@ -133,25 +142,22 @@ var deleteComponentCmd = &cobra.Command{
 }
 
 func init() {
-	getComponentCmd.Flags().StringVarP(&apiKey, "api-key", "k", "", "API key to authenticate against the status page API (required)")
+	getComponentCmd.Flags().StringVarP(&apiKey, "api-key", "k", "API_KEY environment variable", "API key to authenticate against the status page API (required)")
 	getComponentCmd.Flags().StringVarP(&pageID, "page-id", "p", "", "Page identifier (required)")
 	getComponentCmd.Flags().StringVarP(&componentID, "id", "i", "", "Component identifier")
-	getComponentCmd.MarkFlagRequired("api-key")
 	getComponentCmd.MarkFlagRequired("page-id")
-	createComponentCmd.Flags().StringVarP(&apiKey, "api-key", "k", "", "API key to authenticate against the status page API (required)")
+	createComponentCmd.Flags().StringVarP(&apiKey, "api-key", "k", "API_KEY environment variable", "API key to authenticate against the status page API (required)")
 	createComponentCmd.Flags().StringVarP(&pageID, "page-id", "p", "", "Page identifier (required)")
 	createComponentCmd.Flags().StringVarP(&componentName, "name", "n", "", "Display name for component")
 	createComponentCmd.Flags().StringVarP(&componentDescription, "description", "d", "", "More detailed description for component")
 	createComponentCmd.Flags().StringVarP(&componentStatus, "status", "s", "", "Status of the component. Valid choices are: operational, under_maintenance, degraded_performance, partial_outage, major_outage.")
-	createComponentCmd.MarkFlagRequired("api-key")
 	createComponentCmd.MarkFlagRequired("page-id")
 	createComponentCmd.MarkFlagRequired("name")
 	createComponentCmd.MarkFlagRequired("description")
 	createComponentCmd.MarkFlagRequired("status")
-	deleteComponentCmd.Flags().StringVarP(&apiKey, "api-key", "k", "", "API key to authenticate against the status page API (required)")
+	deleteComponentCmd.Flags().StringVarP(&apiKey, "api-key", "k", "API_KEY environment variable", "API key to authenticate against the status page API (required)")
 	deleteComponentCmd.Flags().StringVarP(&componentID, "id", "i", "", "Component identifier (required)")
 	deleteComponentCmd.Flags().StringVarP(&pageID, "page-id", "p", "", "Page identifier (required)")
-	deleteComponentCmd.MarkFlagRequired("api-key")
 	deleteComponentCmd.MarkFlagRequired("id")
 	deleteComponentCmd.MarkFlagRequired("page-id")
 	createCmd.AddCommand(createComponentCmd)
