@@ -9,7 +9,7 @@ It is assumed that you have created an Atlassian Statuspage account, a page and 
 
 Statuspage resources exist within the scope of a `page`, therefore `--page-id` or `-p` is a required global flag with all commands.
 
-The Statuspage CLI only supports key-based authentication, therefore `--key-id` or `-k` is a required global flag with all commands.
+The Statuspage CLI only supports key-based authentication, therefore `API_KEY` environment variable (default) or `--key-id` or `-k` is a required global flag with all commands.
 
 ### Installing
 
