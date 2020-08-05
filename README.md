@@ -2,7 +2,7 @@
 
 Statuspage CLI allows you to create, read, update and delete Statuspage resources.
 
-<img src="images/statuspage_cli.gif" width="800" height="160"/>
+<img src="images/statuspage_cli.gif" width="600" height="200"/>
 
 ## Prerequisite
 It is assumed that you have created an Atlassian Statuspage account, a page and an API key.
