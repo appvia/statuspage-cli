@@ -1,4 +1,3 @@
-
 /**
 Copyright © 2020 Appvia Ltd <info@appvia.io>
 *
@@ -18,21 +17,21 @@ Copyright © 2020 Appvia Ltd <info@appvia.io>
 package utils
 
 import (
-  "os"
-  "fmt"
+	"fmt"
+	"os"
 )
 
 func GetEnv(str string) string {
-  envVar := os.Getenv(str)
-  return envVar
+	envVar := os.Getenv(str)
+	return envVar
 }
 
 func DefaultToEnv(keyFromEnv string, keyFromFlag string) string {
-  if keyFromFlag == "" && keyFromEnv == "" {
-    fmt.Println("Set API_KEY as environment variable or specify --api-key flag or -k flag.")
-    os.Exit(1)
-  } else if keyFromFlag == "" && keyFromEnv != "" {
-      return keyFromEnv
-  }
-  return keyFromFlag
+	if keyFromFlag == "" && keyFromEnv == "" {
+		fmt.Println("Set API_KEY as environment variable or specify --api-key flag or -k flag.")
+		os.Exit(1)
+	} else if keyFromFlag == "" && keyFromEnv != "" {
+		return keyFromEnv
+	}
+	return keyFromFlag
 }

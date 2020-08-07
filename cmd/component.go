@@ -16,10 +16,10 @@ limitations under the License.
 package cmd
 
 import (
+	"../utils"
 	"bytes"
 	"fmt"
 	"github.com/spf13/cobra"
-	"../utils"
 	"io/ioutil"
 	"net/http"
 	"os"

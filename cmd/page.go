@@ -16,9 +16,9 @@ limitations under the License.
 package cmd
 
 import (
+	"../utils"
 	"fmt"
 	"github.com/spf13/cobra"
-	"../utils"
 	"io/ioutil"
 	"net/http"
 	"os"
